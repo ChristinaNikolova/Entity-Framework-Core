@@ -199,9 +199,7 @@ namespace ProductShop
         {
             var users = context
                 .Users
-                .ToList()
                 .Where(u => u.ProductsSold.Any(ps => ps.Buyer != null))
-                .OrderByDescending(u => u.ProductsSold.Where(ps => ps.Buyer != null).Count())
                 .Select(u => new
                 {
                     u.FirstName,
@@ -220,6 +218,8 @@ namespace ProductShop
                         .ToList()
                     }
                 })
+                .ToList()
+                .OrderByDescending(u => u.SoldProducts.Count)
                 .ToList();
 
             var finalUsers = new
