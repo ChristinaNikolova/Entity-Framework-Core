@@ -1,19 +1,21 @@
-﻿namespace MusicHub.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Serialization;
-    using Data;
-    using MusicHub.Data.Models;
-    using MusicHub.Data.Models.Enums;
-    using MusicHub.DataProcessor.ImportDtos;
-    using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+
+using MusicHub.Data;
+using MusicHub.Data.Models;
+using MusicHub.Data.Models.Enums;
+using MusicHub.DataProcessor.ImportDtos;
+
+namespace MusicHub.DataProcessor
+{
     public class Deserializer
     {
         private const string ErrorMessage = "Invalid data";

@@ -1,17 +1,19 @@
-﻿namespace Cinema.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using Cinema.DataProcessor.ExportDto;
-    using Data;
-    using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+
+using Cinema.Data;
+using Cinema.DataProcessor.ExportDto;
+
+namespace Cinema.DataProcessor
+{
     public class Serializer
     {
         public static string ExportTopMovies(CinemaContext context, int rating)

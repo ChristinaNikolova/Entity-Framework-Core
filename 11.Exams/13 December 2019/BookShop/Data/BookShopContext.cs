@@ -1,8 +1,9 @@
-﻿namespace BookShop.Data
-{
-    using BookShop.Data.Models;
-    using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
+using BookShop.Data.Models;
+
+namespace BookShop.Data
+{
     public class BookShopContext : DbContext
     {
         public BookShopContext() { }

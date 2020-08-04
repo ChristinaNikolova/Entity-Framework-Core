@@ -1,20 +1,21 @@
-﻿namespace BookShop.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Serialization;
-    using BookShop.Data.Models;
-    using BookShop.Data.Models.Enums;
-    using BookShop.DataProcessor.ImportDto;
-    using Data;
-    using Newtonsoft.Json;
-    using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+
+using BookShop.Data.Models;
+using BookShop.Data.Models.Enums;
+using BookShop.DataProcessor.ImportDto;
+using BookShop.Data;
+
+namespace BookShop.DataProcessor
+{
     public class Deserializer
     {
         private const string ErrorMessage = "Invalid data!";
@@ -31,39 +32,45 @@
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ImportBookDto>), new XmlRootAttribute("Books"));
 
-            using (StringReader reader = new StringReader(xmlString))
+            List<ImportBookDto> importBookDtos =
+                (List<ImportBookDto>)xmlSerializer.Deserialize(new StringReader(xmlString));
+
+            List<Book> books = new List<Book>();
+
+            foreach (ImportBookDto importBookDto in importBookDtos)
             {
-                List<ImportBookDto> importBookDtos =
-                    (List<ImportBookDto>)xmlSerializer.Deserialize(reader);
-
-                List<Book> books = new List<Book>();
-
-                foreach (ImportBookDto importBookDto in importBookDtos)
+                if (!IsValid(importBookDto))
                 {
-                    if (!IsValid(importBookDto))
-                    {
-                        sb.AppendLine(ErrorMessage);
-                        continue;
-                    }
-                    Book book = new Book()
-                    {
-                        Name = importBookDto.Name,
-                        Genre = (Genre)(importBookDto.Genre),
-                        Pages = importBookDto.Pages,
-                        Price = importBookDto.Price,
-                        PublishedOn = DateTime.ParseExact(importBookDto.PublishedOn, "MM/dd/yyyy", CultureInfo.InvariantCulture),
-                    };
-
-                    books.Add(book);
-
-                    sb.AppendLine(string.Format(SuccessfullyImportedBook, book.Name, book.Price));
+                    sb.AppendLine(ErrorMessage);
+                    continue;
                 }
 
-                context.Books.AddRange(books);
-                context.SaveChanges();
+                bool isPublishDateValid = DateTime.TryParseExact(importBookDto.PublishedOn, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime publishDate);
 
-                return sb.ToString().TrimEnd();
+                if (!isPublishDateValid)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Book book = new Book()
+                {
+                    Name = importBookDto.Name,
+                    Pages = importBookDto.Pages,
+                    PublishedOn = publishDate,
+                    Price = importBookDto.Price,
+                    Genre = (Genre)importBookDto.Genre,
+                };
+
+                books.Add(book);
+
+                sb.AppendLine(string.Format(SuccessfullyImportedBook, book.Name, book.Price));
             }
+
+            context.Books.AddRange(books);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string ImportAuthors(BookShopContext context, string jsonString)

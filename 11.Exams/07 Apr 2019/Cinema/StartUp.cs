@@ -1,13 +1,13 @@
-﻿namespace Cinema
+﻿using System;
+using System.IO;
+
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+
+using Cinema.Data;
+
+namespace Cinema
 {
-    using System;
-    using System.IO;
-
-    using AutoMapper;
-    using Microsoft.EntityFrameworkCore;
-
-    using Data;
-
     public class StartUp
     {
         public static void Main(string[] args)

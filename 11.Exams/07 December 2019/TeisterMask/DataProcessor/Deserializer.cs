@@ -1,22 +1,21 @@
-﻿namespace TeisterMask.DataProcessor
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+
+using Newtonsoft.Json;
+
+using TeisterMask.Data;
+using TeisterMask.Data.Models;
+using TeisterMask.Data.Models.Enums;
+using TeisterMask.DataProcessor.ImportDto;
+
+namespace TeisterMask.DataProcessor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
-
-    using Data;
-    using System.Xml.Serialization;
-    using TeisterMask.DataProcessor.ImportDto;
-    using System.IO;
-    using TeisterMask.Data.Models;
-    using System.Text;
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using System.Linq;
-    using TeisterMask.Data.Models.Enums;
-
     public class Deserializer
     {
         private const string ErrorMessage = "Invalid data!";
@@ -48,13 +47,21 @@
                     continue;
                 }
 
-                bool isProjectDueDate = DateTime.TryParseExact(importProjectDto.DueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime projectDueDate);
+                bool isProjectOpenDateValid = DateTime.TryParseExact(importProjectDto.OpenDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime projectOpenDate);
+
+                if (!isProjectOpenDateValid)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
 
                 Project project = new Project()
                 {
                     Name = importProjectDto.Name,
-                    OpenDate = DateTime.ParseExact(importProjectDto.OpenDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    OpenDate = projectOpenDate,
                 };
+
+                bool isProjectDueDate = DateTime.TryParseExact(importProjectDto.DueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime projectDueDate);
 
                 if (isProjectDueDate)
                 {
@@ -75,7 +82,7 @@
 
                     DateTime taskDueDate = DateTime.ParseExact(importTaskDto.DueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                    if (taskOpenDate < project.OpenDate || (taskDueDate > project.DueDate && isProjectDueDate))
+                    if (taskOpenDate < projectOpenDate || (taskDueDate > projectDueDate && isProjectDueDate))
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;

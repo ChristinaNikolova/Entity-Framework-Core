@@ -1,8 +1,9 @@
-﻿namespace MusicHub.Data
-{
-    using Microsoft.EntityFrameworkCore;
-    using MusicHub.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
+using MusicHub.Data.Models;
+
+namespace MusicHub.Data
+{
     public class MusicHubDbContext : DbContext
     {
         public MusicHubDbContext()

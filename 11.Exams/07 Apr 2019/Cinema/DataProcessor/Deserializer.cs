@@ -1,19 +1,21 @@
-﻿namespace Cinema.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Serialization;
-    using Cinema.Data.Models;
-    using Cinema.Data.Models.Enums;
-    using Cinema.DataProcessor.ImportDto;
-    using Data;
-    using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+
+using Cinema.Data;
+using Cinema.Data.Models;
+using Cinema.Data.Models.Enums;
+using Cinema.DataProcessor.ImportDto;
+
+namespace Cinema.DataProcessor
+{
     public class Deserializer
     {
         private const string ErrorMessage = "Invalid data!";

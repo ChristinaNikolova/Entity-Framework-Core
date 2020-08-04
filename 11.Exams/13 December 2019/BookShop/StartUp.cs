@@ -1,15 +1,13 @@
-﻿namespace BookShop
+﻿using System;
+using System.Globalization;
+using System.IO;
+
+using Microsoft.EntityFrameworkCore;
+
+using BookShop.Data;
+
+namespace BookShop
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-
-    using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
-
-    using Data;
-
     public class StartUp
     {
         public static void Main(string[] args)

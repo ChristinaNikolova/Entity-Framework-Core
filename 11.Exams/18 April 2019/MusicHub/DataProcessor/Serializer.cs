@@ -1,18 +1,19 @@
-﻿namespace MusicHub.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using Data;
-    using MusicHub.DataProcessor.ExportDtos;
-    using Newtonsoft.Json;
-    using Formatting = Newtonsoft.Json.Formatting;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+using Formatting = Newtonsoft.Json.Formatting;
+
+using MusicHub.Data;
+using MusicHub.DataProcessor.ExportDtos;
+
+namespace MusicHub.DataProcessor
+{
     public class Serializer
     {
         public static string ExportAlbumsInfo(MusicHubDbContext context, int producerId)

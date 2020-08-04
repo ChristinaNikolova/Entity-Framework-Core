@@ -1,18 +1,20 @@
-﻿namespace TeisterMask.DataProcessor
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using Data;
-    using Newtonsoft.Json;
-    using TeisterMask.DataProcessor.ExportDto;
-    using Formatting = Newtonsoft.Json.Formatting;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
+using Formatting = Newtonsoft.Json.Formatting;
+using Newtonsoft.Json;
+
+using TeisterMask.Data;
+using TeisterMask.DataProcessor.ExportDto;
+
+namespace TeisterMask.DataProcessor
+{
     public class Serializer
     {
         public static string ExportProjectWithTheirTasks(TeisterMaskContext context)

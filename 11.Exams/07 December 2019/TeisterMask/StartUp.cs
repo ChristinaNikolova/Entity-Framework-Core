@@ -1,12 +1,13 @@
-﻿namespace TeisterMask
+﻿using System;
+using System.Globalization;
+using System.IO;
+
+using Microsoft.EntityFrameworkCore;
+
+using TeisterMask.Data;
+
+namespace TeisterMask
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using Microsoft.EntityFrameworkCore;
-
-    using Data;
-
     public class StartUp
     {
         public static void Main(string[] args)
@@ -27,7 +28,7 @@
             }
         }
 
-        private static void ImportEntities(TeisterMaskContext context,string baseDir, string exportDir)
+        private static void ImportEntities(TeisterMaskContext context, string baseDir, string exportDir)
         {
             var projects =
                 DataProcessor.Deserializer.ImportProjects(context,

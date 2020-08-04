@@ -1,8 +1,9 @@
-﻿namespace Cinema.Data
-{
-    using Cinema.Data.Models;
-    using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
+using Cinema.Data.Models;
+
+namespace Cinema.Data
+{
     public class CinemaContext : DbContext
     {
         public CinemaContext() { }
