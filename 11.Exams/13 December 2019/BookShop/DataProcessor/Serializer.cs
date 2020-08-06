@@ -34,7 +34,6 @@ namespace BookShop.DataProcessor
                     })
                     .ToList()
                 })
-                .ToList()
                 .OrderByDescending(a => a.Books.Count())
                 .ThenBy(a => a.AuthorName)
                 .ToList();
@@ -53,7 +52,6 @@ namespace BookShop.DataProcessor
                 .Books
                 .Where(b => b.PublishedOn < date
                     && b.Genre == Genre.Science)
-                .ToList()
                 .OrderBy(b => b.PublishedOn)
                 .Select(b => new ExportOldestBooksDto
                 {

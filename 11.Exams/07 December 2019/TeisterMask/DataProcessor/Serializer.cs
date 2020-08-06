@@ -21,7 +21,6 @@ namespace TeisterMask.DataProcessor
         {
             var projects = context
                 .Projects
-                .ToList()
                 .Where(p => p.Tasks.Any())
                 .Select(p => new ExportProjectWithTheirTasksDto
                 {

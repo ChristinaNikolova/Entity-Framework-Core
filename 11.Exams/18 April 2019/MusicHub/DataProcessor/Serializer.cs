@@ -21,7 +21,6 @@ namespace MusicHub.DataProcessor
             var albums = context
                 .Albums
                 .Where(a => a.ProducerId == producerId)
-                .ToList()
                 .OrderByDescending(a => a.Price)
                 .Select(a => new
                 {
@@ -29,7 +28,6 @@ namespace MusicHub.DataProcessor
                     ReleaseDate = a.ReleaseDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture),
                     ProducerName = a.Producer.Name,
                     Songs = a.Songs
-                    .ToList()
                     .OrderByDescending(s => s.Name)
                     .ThenBy(s => s.Writer.Name)
                     .Select(s => new
@@ -64,7 +62,6 @@ namespace MusicHub.DataProcessor
                     AlbumProducer = s.Album.Producer.Name,
                     Duration = s.Duration.ToString("c", CultureInfo.InvariantCulture),
                 })
-                .ToList()
                 .OrderBy(s => s.SongName)
                 .ThenBy(s => s.Writer)
                 .ThenBy(s => s.Performer)
