@@ -218,7 +218,6 @@ namespace ProductShop
                         .ToList()
                     }
                 })
-                .ToList()
                 .OrderByDescending(u => u.SoldProducts.Count)
                 .ToList();
 

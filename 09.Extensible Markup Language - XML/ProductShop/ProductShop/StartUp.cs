@@ -257,7 +257,6 @@ namespace ProductShop
         {
             var users = context
                 .Users
-                .ToList()
                 .Where(u => u.ProductsSold.Any(ps => ps.Buyer != null))
                 .OrderByDescending(u => u.ProductsSold.Where(ps => ps.Buyer != null).Count())
                 .Take(10)
