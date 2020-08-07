@@ -115,18 +115,7 @@ namespace Cinema.DataProcessor
 
                 string projectionType = "Normal";
 
-                if (hall.Is3D && hall.Is4Dx)
-                {
-                    projectionType = "4Dx/3D";
-                }
-                else if (hall.Is3D)
-                {
-                    projectionType = "3D";
-                }
-                else if (hall.Is4Dx)
-                {
-                    projectionType = "4Dx";
-                }
+                projectionType = GetTheProjectionType(hall, projectionType);
 
                 sb.AppendLine(String.Format(SuccessfulImportHallSeat, hall.Name, projectionType, hall.Seats.Count()));
             }
@@ -273,6 +262,24 @@ namespace Cinema.DataProcessor
             var validationResult = new List<ValidationResult>();
 
             return Validator.TryValidateObject(dto, validationContext, validationResult, true);
+        }
+
+        private static string GetTheProjectionType(Hall hall, string projectionType)
+        {
+            if (hall.Is3D && hall.Is4Dx)
+            {
+                projectionType = "4Dx/3D";
+            }
+            else if (hall.Is3D)
+            {
+                projectionType = "3D";
+            }
+            else if (hall.Is4Dx)
+            {
+                projectionType = "4Dx";
+            }
+
+            return projectionType;
         }
     }
 }
