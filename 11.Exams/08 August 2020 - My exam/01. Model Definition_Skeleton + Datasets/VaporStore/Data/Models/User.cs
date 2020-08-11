@@ -12,17 +12,15 @@ namespace VaporStore.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [MaxLength(20)]
         public string Username { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z][a-z]+[ ][A-Z][a-z]+$")]
         public string FullName { get; set; }
 
         [Required]
         public string Email { get; set; }
 
-        [Range(typeof(int), "3", "103")]
         public int Age { get; set; }
 
         public virtual ICollection<Card> Cards { get; set; }

@@ -12,7 +12,6 @@ namespace VaporStore.Data.Models
         public PurchaseType Type { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z0-9]{4}[-][A-Z0-9]{4}[-][A-Z0-9]{4}$")]
         public string ProductKey { get; set; }
 
         public DateTime Date { get; set; }
